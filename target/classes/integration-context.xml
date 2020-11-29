@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+            ">
+
+	<!-- SIMPLE FLOW  METRICS -->
+
+    <int:gateway service-interface="org.boudet.spring.integration.sample.service.MetricSenderService">
+        <int:method name="send" request-channel="metrics.in"/>       
+    </int:gateway>
+    
+    <int:channel id="metrics.in"/>
+    
+    <int:service-activator input-channel="metrics.in" method="receive">
+    	<bean class="org.boudet.spring.integration.sample.service.SimpleMetricReceiverService"/>
+	</int:service-activator>
+
+
+
+	<!-- SIMPLE FLOW DOVREQ -->
+	
+	<int:gateway service-interface="org.boudet.spring.integration.sample.service.DovReqReceiver">       
+        <int:method name="receive" request-channel="dovreq.in"/>
+    </int:gateway>
+
+	<int:channel id="dovreq.in"/>
+	<int:service-activator input-channel="dovreq.in" method="handle" ref="dovReqReceiverServiceActivator" />
+    
+	
+	
+	<!-- WITH FILTER AND ROUTING -->
+	
+	
+	<int:filter input-channel="metrics.in" ref="messageFilter" output-channel="metrics.filtered"/>
+	
+	<int:channel id="metrics.filtered"/>
+	<bean id="messageFilter" class="org.boudet.spring.integration.sample.filter.MessageFilterImpl"/>
+
+	<int:router input-channel="metrics.filtered" expression="payload.type">
+	    <int:mapping value="temperature" channel="metrics.temperature"/>
+	    <int:mapping value="humidity" channel="metrics.humidity"/>
+	</int:router>
+
+	<int:channel id="metrics.temperature"/>
+    <int:service-activator input-channel="metrics.temperature" method="receive">
+        <bean class="org.boudet.spring.integration.sample.service.TemperatureMetricReceiverService"/>
+    </int:service-activator>
+
+	<int:channel id="metrics.humidity"/>
+    <int:service-activator input-channel="metrics.humidity" method="receive">
+        <bean class="org.boudet.spring.integration.sample.service.HumidityMetricReceiverService"/>
+    </int:service-activator>
+
+     
+
+
+</beans>

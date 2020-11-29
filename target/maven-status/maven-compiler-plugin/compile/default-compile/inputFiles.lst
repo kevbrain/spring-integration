@@ -1,0 +1,8 @@
+C:\Users\kevyn.schrondweiler\git\spring-integration-sample\src\main\java\org\boudet\spring\integration\sample\Application.java
+C:\Users\kevyn.schrondweiler\git\spring-integration-sample\src\main\java\org\boudet\spring\integration\sample\service\HumidityMetricReceiverService.java
+C:\Users\kevyn.schrondweiler\git\spring-integration-sample\src\main\java\org\boudet\spring\integration\sample\service\MetricSenderService.java
+C:\Users\kevyn.schrondweiler\git\spring-integration-sample\src\main\java\org\boudet\spring\integration\sample\service\TemperatureMetricReceiverService.java
+C:\Users\kevyn.schrondweiler\git\spring-integration-sample\src\main\java\org\boudet\spring\integration\sample\service\SimpleMetricReceiverService.java
+C:\Users\kevyn.schrondweiler\git\spring-integration-sample\src\main\java\org\boudet\spring\integration\sample\service\MetricReceiverService.java
+C:\Users\kevyn.schrondweiler\git\spring-integration-sample\src\main\java\org\boudet\spring\integration\sample\model\Metric.java
+C:\Users\kevyn.schrondweiler\git\spring-integration-sample\src\main\java\org\boudet\spring\integration\sample\controller\MetricsController.java
