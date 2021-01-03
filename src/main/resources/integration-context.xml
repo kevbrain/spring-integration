@@ -11,16 +11,17 @@
 
 	<!-- SIMPLE FLOW  METRICS -->
 
-    <int:gateway service-interface="org.boudet.spring.integration.sample.service.MetricSenderService">
+    <int:gateway id="gtwMetricIn" service-interface="org.boudet.spring.integration.sample.service.MetricSenderService">
         <int:method name="send" request-channel="metrics.in"/>       
     </int:gateway>
     
     <int:channel id="metrics.in"/>
     
+    <!-- 
     <int:service-activator input-channel="metrics.in" method="receive">
     	<bean class="org.boudet.spring.integration.sample.service.SimpleMetricReceiverService"/>
 	</int:service-activator>
-
+ 	-->
 
 
 	<!-- SIMPLE FLOW DOVREQ -->
@@ -42,7 +43,7 @@
 	<int:channel id="metrics.filtered"/>
 	<bean id="messageFilter" class="org.boudet.spring.integration.sample.filter.MessageFilterImpl"/>
 
-	<int:router input-channel="metrics.filtered" expression="payload.type">
+	<int:router input-channel="metrics.filtered" expression="payload.type" >
 	    <int:mapping value="temperature" channel="metrics.temperature"/>
 	    <int:mapping value="humidity" channel="metrics.humidity"/>
 	</int:router>

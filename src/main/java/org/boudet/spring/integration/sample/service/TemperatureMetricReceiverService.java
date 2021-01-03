@@ -12,6 +12,6 @@ public class TemperatureMetricReceiverService implements MetricReceiverService {
 
     @Override
     public void receive(Metric metric) {
-        logger.debug("received a temperature metric");
+        logger.debug("received a temperature metric" + metric);
     }
 }

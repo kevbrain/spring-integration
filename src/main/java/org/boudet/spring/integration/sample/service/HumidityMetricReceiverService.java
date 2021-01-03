@@ -12,11 +12,6 @@ public class HumidityMetricReceiverService implements MetricReceiverService {
 
     @Override
     public void receive(Metric metric) {
-        logger.debug("received a humidity metric");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        logger.debug("received a humidity metric "+metric );       
     }
 }
