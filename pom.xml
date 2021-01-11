@@ -71,12 +71,18 @@
 	                </config>
               </generator>
               <enricher>
-	               
+	                <includes>
+	                	<include>jkube-openshift-service-expose</include>
+	                	<include>jkube-openshift-route</include>
+	                </includes>
+	                <excludes>
+	                  <exclude>jkube-expose</exclude>
+	                </excludes> 
 	                <config>
-	                  <jkube-service>
+	                  <jkube-openshift-service-expose>
 	                    <name>spring-integration-sample</name>
         				<port>80:8080</port>
-	                  </jkube-service>
+	                  </jkube-openshift-service-expose>
 	               
 	                  <jkube-openshift-route>
 				          <generateRoute>true</generateRoute>
