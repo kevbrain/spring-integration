@@ -71,9 +71,7 @@
 	                </config>
               </generator>
               <enricher>
-	                <excludes>
-	                  <exclude>jkube-expose</exclude>
-	                </excludes> 
+	               
 	                <config>
 	                  <jkube-service>
 	                    <name>spring-integration-sample</name>
