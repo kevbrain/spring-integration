@@ -71,14 +71,16 @@
 	                </config>
               </generator>
               <enricher>
-	               <!--  <excludes>
+	                <excludes>
 	                  <exclude>jkube-expose</exclude>
-	                </excludes> -->
+	                </excludes> 
 	                <config>
 	                  <jkube-service>
 	                    <name>spring-integration-sample</name>
         				<port>80:8080</port>
 	                  </jkube-service>
+	                </config>
+	                <config>
 	                  <jkube-openshift-route>
 				          <generateRoute>true</generateRoute>
 				          <tlsInsecureEdgeTerminationPolicy>Allow</tlsInsecureEdgeTerminationPolicy>
