@@ -50,32 +50,42 @@
             <configuration>
 
               <resources>
-                <labels>
-                  <all>
-                    <testProject>spring-boot-sample</testProject>
-                  </all>
-                </labels>
+               	<labels>
+			        <all>
+			          <property>
+			            <name>app</name>
+			            <value>spring-integration-sample</value>
+			          </property>
+			        </all>
+			      </labels>
               </resources>
 
               <generator>
-                <includes>
-                  <include>spring-boot</include>
-                </includes>
-                <config>
-                  <spring-boot>
-                    <color>always</color>
-                  </spring-boot>
-                </config>
+	                <includes>
+	                  <include>spring-boot</include>
+	                </includes>
+	                <config>
+	                  <spring-boot>
+	                    <color>always</color>
+	                  </spring-boot>
+	                </config>
               </generator>
               <enricher>
-                <excludes>
-                  <exclude>jkube-expose</exclude>
-                </excludes>
-                <config>
-                  <jkube-service>
-                    <type>NodePort</type>
-                  </jkube-service>
-                </config>
+	               <!--  <excludes>
+	                  <exclude>jkube-expose</exclude>
+	                </excludes> -->
+	                <config>
+	                  <jkube-service>
+	                    <name>spring-integration-sample</name>
+        				<port>80:8080</port>
+	                  </jkube-service>
+	                  <jkube-openshift-route>
+				          <generateRoute>true</generateRoute>
+				          <tlsInsecureEdgeTerminationPolicy>Allow</tlsInsecureEdgeTerminationPolicy>
+				          <tlsTermination>edge</tlsTermination>
+        			  </jkube-openshift-route>
+	                </config>
+	                
               </enricher>
             </configuration>
 
