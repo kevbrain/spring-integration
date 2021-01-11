@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>spring-integration-sample</groupId>
   <artifactId>spring-integration-sample</artifactId>
@@ -28,15 +28,16 @@
     		<groupId>org.springframework.integration</groupId>
     		<artifactId>spring-integration-http</artifactId>    
     	</dependency>		
-	
-	
-
 		<dependency>
     		<groupId>org.projectlombok</groupId>
     		<artifactId>lombok</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
+		<dependency>
+		    <groupId>io.fabric8</groupId>
+		    <artifactId>kubernetes-client</artifactId>
+		    <version>4.10.3</version>
+  		</dependency>
 		
 	</dependencies>
   
@@ -49,6 +50,21 @@
           <source>1.8</source>
           <target>1.8</target>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>fabric8-maven-plugin</artifactId>
+        <version>3.3.3</version>
+        <executions>
+          <execution>
+            <id>fmp</id>
+            <goals>
+              <goal>resource</goal>
+              <goal>helm</goal>
+              <goal>build</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
