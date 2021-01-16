@@ -14,7 +14,7 @@ public class LoggerAnyMessages {
 	public void handle(Message<?> message) {
 
 		log.info(Thread.currentThread().getName()+" # "+(String) message.getPayload());
-			
+		log.info(Thread.currentThread().getName()+" # "+"[ID="+message.getHeaders().getId()+", TimeStamp:"+message.getHeaders().getTimestamp()+ "]");	
 	}	
 
 }
