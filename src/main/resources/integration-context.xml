@@ -34,7 +34,6 @@
 	<int:service-activator input-channel="dovreq.in" method="handle" ref="dovReqReceiverServiceActivator" />
     
 	
-	
 	<!-- WITH FILTER AND ROUTING -->
 	
 	
@@ -57,8 +56,5 @@
     <int:service-activator input-channel="metrics.humidity" method="receive">
         <bean class="org.boudet.spring.integration.sample.service.HumidityMetricReceiverService"/>
     </int:service-activator>
-
      
-
-
 </beans>

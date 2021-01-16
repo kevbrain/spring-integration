@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>spring-integration-sample</groupId>
   <artifactId>spring-integration-sample</artifactId>
@@ -9,7 +9,8 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.3.3.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
-</parent>
+ </parent>
+
 
   	<dependencies>		
 		<dependency>
@@ -19,7 +20,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>			
+		</dependency>		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>	
 		<dependency>
     		<groupId>org.springframework.integration</groupId>
     		<artifactId>spring-integration-core</artifactId>
@@ -28,28 +33,104 @@
     		<groupId>org.springframework.integration</groupId>
     		<artifactId>spring-integration-http</artifactId>    
     	</dependency>		
-	
-	
-
+    	<dependency>
+ 		   <groupId>org.springframework.integration</groupId>
+		    <artifactId>spring-integration-jms</artifactId>
+		</dependency>		
+		<dependency>
+ 		   <groupId>org.springframework.integration</groupId>
+		    <artifactId>spring-integration-kafka</artifactId>
+		    <version>3.3.1.RELEASE</version>
+		</dependency>		
+		<dependency>
+		      <groupId>org.springframework.integration</groupId>
+		      <artifactId>spring-integration-jpa</artifactId>
+		   
+		      <scope>compile</scope>
+		      <exclusions>
+		        <exclusion>
+		          <artifactId>jackson-module-kotlin</artifactId>
+		          <groupId>com.fasterxml.jackson.module</groupId>
+		        </exclusion>
+		      </exclusions>
+    	</dependency>
 		<dependency>
     		<groupId>org.projectlombok</groupId>
     		<artifactId>lombok</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
-		
+				
 	</dependencies>
   
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+	  </plugin>
+      <plugin>
+            <groupId>org.eclipse.jkube</groupId>
+            <artifactId>openshift-maven-plugin</artifactId>
+            <version>1.0.2</version>
+            <configuration>
+
+              <resources>
+               	<labels>
+			        <all>
+			          <property>
+			            <name>app</name>
+			            <value>spring-integration-sample</value>
+			          </property>
+			        </all>
+			      </labels>
+              </resources>
+
+              <generator>
+	                <includes>
+	                  <include>spring-boot</include>
+	                </includes>
+	                <config>
+	                  <spring-boot>
+	                    <color>always</color>
+	                  </spring-boot>
+	                </config>
+              </generator>
+              <enricher>
+	                <includes>
+	                	<include>jkube-openshift-service-expose</include>
+	                	<include>jkube-openshift-route</include>
+	                </includes>
+	                <excludes>
+	                  <exclude>jkube-expose</exclude>
+	                </excludes> 
+	                <config>
+	                  <jkube-openshift-service-expose>
+	                    <name>spring-integration-sample</name>
+        				<port>80:8080</port>
+	                  </jkube-openshift-service-expose>
+	               
+	                  <jkube-openshift-route>
+				          <generateRoute>true</generateRoute>
+				          <tlsInsecureEdgeTerminationPolicy>Allow</tlsInsecureEdgeTerminationPolicy>
+				          <tlsTermination>edge</tlsTermination>
+        			  </jkube-openshift-route>
+	                </config>
+	                
+              </enricher>
+            </configuration>
+
+            <executions>
+              <execution>
+                <goals>
+                  <goal>resource</goal>
+                  <goal>build</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+      
     </plugins>
   </build>
+ 
+ 
 </project>
