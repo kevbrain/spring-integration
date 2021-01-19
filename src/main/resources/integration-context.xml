@@ -41,21 +41,25 @@
 	    <int:mapping value="humidity" channel="metrics.humidity"/>
 	</int:router>
 	
-	<bean id="metricsTransformers" class="org.boudet.spring.integration.sample.transformers.MetricsTransformers"/>
+	<!-- <bean id="metricsTransformers" class="org.boudet.spring.integration.sample.transformers.MetricsTransformers"/> -->
 	<int:channel id="metrics.all"/>
-    <!-- <int:object-to-json-transformer input-channel="metrics.all" output-channel="produceMetricToKafka"/> -->
-    <int:transformer  input-channel="metrics.all" method="transformMetricToKafkaMessage" ref="metricsTransformers" output-channel="produceMetricToKafka" >
-    	
-    </int:transformer>
+	<int:chain input-channel="metrics.humidity" output-channel="produceMetricToKafka">
+	   		<!-- <int:object-to-json-transformer input-channel="metrics.all" output-channel="produceMetricToKafka"/> -->
+		    <int:service-activator ref="loggerAnyMessage" method="handle"/> 
+		    <!-- <int:transformer  input-channel="metrics.all" method="transformMetricToKafkaMessage" ref="metricsTransformers" output-channel="produceMetricToKafka" />-->
+    </int:chain>
+  
 
 	<int:channel id="metrics.temperature"/>
 	<int:chain input-channel="metrics.temperature" output-channel="produceMetricToKafka">
-			<int:transformer  method="transformMetricToKafkaMessage" ref="metricsTransformers"  />    
+			<int:service-activator ref="loggerAnyMessage" method="handle"/> 
+			<!-- <int:transformer  method="transformMetricToKafkaMessage" ref="metricsTransformers"  /> -->    
     </int:chain>
 
 	<int:channel id="metrics.humidity"/>
 	<int:chain input-channel="metrics.humidity" output-channel="produceMetricToKafka">
-		<int:transformer  method="transformMetricToKafkaMessage" ref="metricsTransformers"  />	   
+			<int:service-activator ref="loggerAnyMessage" method="handle"/> 
+			<!-- <int:transformer  method="transformMetricToKafkaMessage" ref="metricsTransformers"  /> -->     
      </int:chain>
  
 </beans>

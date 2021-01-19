@@ -29,7 +29,7 @@
 	
 	<int:channel id="outputFromKafka"/>
 	<int:chain input-channel="outputFromKafka">
-		<int:transformer  method="transformKafkaMetricToMetric" ref="metricsTransformers" />	
+		<!--  <int:transformer  method="transformKafkaMetricToMetric" ref="metricsTransformers" />-->	
 		<int:service-activator ref="loggerAnyMessage" method="handle"/>  
 	</int:chain>															
 	 	
