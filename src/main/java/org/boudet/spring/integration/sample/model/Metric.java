@@ -1,18 +1,70 @@
 package org.boudet.spring.integration.sample.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
-public class Metric implements Serializable {
-    public Date datetime;
-    public int value;
-    public String type;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-    public Date getDatetime() {
+@Entity
+@Table(name = "METRICS")
+public class Metric implements Serializable {
+    
+	@Column(name = "DATETIME")
+	public Timestamp datetime;
+    
+    @Column(name = "VALUE")
+    public int value;
+    
+    @Column(name = "TYPE")
+    public String type;
+    
+    @Id
+	@Column(name = "METRIC_OFFSET", nullable = false)
+    public int metric_offset;
+           
+     
+
+	public Metric() {
+		super();
+	}
+
+
+	public Metric(Timestamp datetime, int value, String type, int metric_offset) {		
+		super();
+		this.datetime = datetime;
+		this.value = value;
+		this.type = type;
+		this.metric_offset = metric_offset;
+	}
+
+
+
+	
+
+	public int getMetric_offset() {
+		return metric_offset;
+	}
+
+
+
+	public void setMetric_offset(int metric_offset) {
+		this.metric_offset = metric_offset;
+	}
+
+
+
+	public Timestamp getDatetime() {
         return datetime;
     }
 
-    public void setDatetime(Date datetime) {
+    public void setDatetime(Timestamp datetime) {
         this.datetime = datetime;
     }
 

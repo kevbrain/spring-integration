@@ -12,18 +12,12 @@
 	<!-- SIMPLE FLOW  METRICS -->
 
     <int:gateway id="gtwMetricIn" service-interface="org.boudet.spring.integration.sample.service.MetricSenderService">
-        <int:method name="send" request-channel="metrics.in"/>       
+        <int:method name="send" request-channel="metrics.in"/>   	    
     </int:gateway>
     
     <int:channel id="metrics.in"/>
     
-    <!-- 
-    <int:service-activator input-channel="metrics.in" method="receive">
-    	<bean class="org.boudet.spring.integration.sample.service.SimpleMetricReceiverService"/>
-	</int:service-activator>
- 	-->
-
-
+   
 	<!-- SIMPLE FLOW DOVREQ -->
 	
 	<int:gateway service-interface="org.boudet.spring.integration.sample.service.DovReqReceiver">       
@@ -42,19 +36,23 @@
 	<int:channel id="metrics.filtered"/>
 	<bean id="messageFilter" class="org.boudet.spring.integration.sample.filter.MessageFilterImpl"/>
 
-	<int:router input-channel="metrics.filtered" expression="payload.type" >
+	<int:router input-channel="metrics.filtered" expression="payload.type" default-output-channel="metrics.all" >
 	    <int:mapping value="temperature" channel="metrics.temperature"/>
 	    <int:mapping value="humidity" channel="metrics.humidity"/>
 	</int:router>
+	
+	<int:channel id="metrics.all"/>
+    <!-- <int:object-to-json-transformer input-channel="metrics.all" output-channel="produceMetricToKafka"/> -->
+    <int:transformer  input-channel="metrics.all" method="transformMetricToKafkaMessage" ref="metricsTransformers" output-channel="produceMetricToKafka" />
 
 	<int:channel id="metrics.temperature"/>
-    <int:service-activator input-channel="metrics.temperature" method="receive">
-        <bean class="org.boudet.spring.integration.sample.service.TemperatureMetricReceiverService"/>
-    </int:service-activator>
+	<int:chain input-channel="metrics.temperature" output-channel="produceMetricToKafka">
+			<int:transformer  method="transformMetricToKafkaMessage" ref="metricsTransformers"  />    
+    </int:chain>
 
 	<int:channel id="metrics.humidity"/>
-    <int:service-activator input-channel="metrics.humidity" method="receive">
-        <bean class="org.boudet.spring.integration.sample.service.HumidityMetricReceiverService"/>
-    </int:service-activator>
-     
+	<int:chain input-channel="metrics.humidity" output-channel="produceMetricToKafka">
+		<int:transformer  method="transformMetricToKafkaMessage" ref="metricsTransformers"  />	   
+     </int:chain>
+ 
 </beans>

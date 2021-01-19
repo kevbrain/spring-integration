@@ -7,6 +7,7 @@ public interface MetricSenderService {
 
     void send(Metric metric);
        
+    Metric saveMetric(Metric metric);
      
 
 }
