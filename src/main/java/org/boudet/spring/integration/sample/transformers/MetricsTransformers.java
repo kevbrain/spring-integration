@@ -39,7 +39,7 @@ public class MetricsTransformers {
 				.build();
 		
 	}
-	
+	@Transformer
 	public Message<String> transformMetricToKafkaMessage(Message<Metric> message) throws JsonGenerationException, JsonMappingException, IOException {
 		log.info(message.getPayload().toString());
 		ObjectMapper mapper = new ObjectMapper();
