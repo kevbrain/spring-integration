@@ -46,7 +46,7 @@
 	<int:chain input-channel="metrics.humidity" output-channel="produceMetricToKafka">
 	   		<!-- <int:object-to-json-transformer input-channel="metrics.all" output-channel="produceMetricToKafka"/> -->
 		    <!--  <int:service-activator ref="loggerAnyMessage" method="handle"/> -->
-		     <int:transformer  input-channel="metrics.all" method="transformMetricToKafkaMessage" ref="metricsTransformers" output-channel="produceMetricToKafka" />
+		     <int:transformer  method="transformMetricToKafkaMessage" ref="metricsTransformers"  />
     </int:chain>
   
 
