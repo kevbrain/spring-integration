@@ -41,9 +41,12 @@
 	    <int:mapping value="humidity" channel="metrics.humidity"/>
 	</int:router>
 	
+	<bean id="metricsTransformers" class="org.boudet.spring.integration.sample.transformers.MetricsTransformers"/>
 	<int:channel id="metrics.all"/>
     <!-- <int:object-to-json-transformer input-channel="metrics.all" output-channel="produceMetricToKafka"/> -->
-    <int:transformer  input-channel="metrics.all" method="transformMetricToKafkaMessage" ref="metricsTransformers" output-channel="produceMetricToKafka" />
+    <int:transformer  input-channel="metrics.all" method="transformMetricToKafkaMessage" ref="metricsTransformers" output-channel="produceMetricToKafka" >
+    	
+    </int:transformer>
 
 	<int:channel id="metrics.temperature"/>
 	<int:chain input-channel="metrics.temperature" output-channel="produceMetricToKafka">
