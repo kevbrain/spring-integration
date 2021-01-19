@@ -1,9 +1,6 @@
 package org.boudet.spring.integration.sample.model;
 
-import java.io.File;
 import java.io.Serializable;
-import java.util.Map;
-
 
 import lombok.Data;
 

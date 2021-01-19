@@ -1,7 +1,5 @@
 package org.boudet.spring.integration.sample.controller;
 
-import java.util.List;
-
 import org.boudet.spring.integration.sample.model.Dovreq;
 import org.boudet.spring.integration.sample.model.Metric;
 import org.boudet.spring.integration.sample.service.DovReqReceiver;
@@ -9,7 +7,6 @@ import org.boudet.spring.integration.sample.service.MetricSenderService;
 import org.boudet.spring.integration.sample.service.MetricsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;

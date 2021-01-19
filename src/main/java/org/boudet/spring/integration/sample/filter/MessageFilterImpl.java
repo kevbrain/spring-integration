@@ -2,7 +2,6 @@ package org.boudet.spring.integration.sample.filter;
 
 import java.util.Date;
 
-
 import org.boudet.spring.integration.sample.model.Metric;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

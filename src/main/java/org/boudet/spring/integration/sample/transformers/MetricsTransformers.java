@@ -1,11 +1,8 @@
 package org.boudet.spring.integration.sample.transformers;
 
-import java.io.File;
 import java.io.IOException;
 
-import org.boudet.spring.integration.sample.activator.LoggerAnyMessages;
 import org.boudet.spring.integration.sample.model.Metric;
-import org.boudet.spring.integration.sample.service.MetricSenderService;
 import org.boudet.spring.integration.sample.service.MetricsService;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
@@ -16,7 +13,6 @@ import org.springframework.integration.annotation.Transformer;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
-
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j

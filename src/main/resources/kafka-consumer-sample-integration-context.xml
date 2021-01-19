@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-jpa="http://www.springframework.org/schema/integration/jpa"
+
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:int-jms="http://www.springframework.org/schema/integration/jms"
+       xmlns:int-kafka="http://www.springframework.org/schema/integration/kafka"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+				            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+				            http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+				            http://www.springframework.org/schema/integration/sftp  http://www.springframework.org/schema/integration/sftp/spring-integration-sftp-2.0.xsd
+				            http://www.springframework.org/schema/integration/jpa http://www.springframework.org/schema/integration/jpa/spring-integration-jpa.xsd
+							http://www.springframework.org/schema/integration/kafka http://www.springframework.org/schema/integration/kafka/spring-integration-kafka.xsd
+							http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd"
+            >
+         
+			
+	<int:poller  id="defaultPoller" fixed-rate="5000" default="true" task-executor="executorDefault"/>
+	<task:executor id="executorDefault" pool-size="10"/>
+		
+		
+			
+	<!-- KAFKA ADAPTATEUR CONSUMER -->
+	
+	<int:channel id="outputFromKafka"/>
+	<int:chain input-channel="outputFromKafka">
+		<int:transformer  method="transformKafkaMetricToMetric" ref="metricsTransformers" />	
+		<int:service-activator ref="loggerAnyMessage" method="handle"/>  
+	</int:chain>															
+	 	
+	<bean id="consumerContainer" class="org.springframework.kafka.listener.KafkaMessageListenerContainer">
+		<constructor-arg>
+			<bean class="org.springframework.kafka.core.DefaultKafkaConsumerFactory">
+				<constructor-arg>
+					<map>
+						 <entry key = "bootstrap.servers"  value = "${kafka.bootstrap-servers}" />
+						 <entry key = "key.deserializer"  value = "org.apache.kafka.common.serialization.StringDeserializer" /> 
+	                     <entry key = "value.deserializer"  value = "org.apache.kafka.common.serialization.StringDeserializer" />
+	                     <entry key = "group.id" value = "${HOSTNAME}"/> 	
+	                     <entry key = "auto.offset.reset" value="earliest"/>                    
+					</map>
+				</constructor-arg>
+			</bean>
+		</constructor-arg>
+		<constructor-arg>
+			<bean class="org.springframework.kafka.listener.ContainerProperties">
+				<constructor-arg name="topics" value="${kafka.consumer.topic}"/>
+			</bean>
+		</constructor-arg>		
+	</bean>
+	
+	
+	<int-kafka:message-driven-channel-adapter 
+		auto-startup="true"
+		listener-container="consumerContainer"
+		channel="outputFromKafka"
+		/>
+				
+</beans>
