@@ -5,14 +5,14 @@
     config:
       spring-boot:
         color: always
-    enricher:
-      includes:
-        - jkube-openshift-service-expose
-        - jkube-openshift-route
-      excludes:
-        - jkube-expose
-      config:
-        jkube-openshift-service-expose:
-         name: spring-integration-sample
-         port: '80:8080'
+  enricher:
+    includes:
+      - jkube-openshift-service-expose
+      - jkube-openshift-route
+    excludes:
+      - jkube-expose
+    config:
+      jkube-openshift-service-expose:
+        name: spring-integration-sample
+        port: '80:8080'
         
