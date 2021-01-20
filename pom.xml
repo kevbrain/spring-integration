@@ -74,7 +74,7 @@
 		    <artifactId>h2</artifactId>
 		    <scope>runtime</scope>
 		</dependency>
-		<dependency>
+		 <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
@@ -93,14 +93,13 @@
             <artifactId>openshift-maven-plugin</artifactId>
             <version>1.0.2</version>
             <configuration>
-		      <!-- <profile>metric-app-h2</profile>-->
-		      
+
               <resources>
                	<labels>
 			        <all>
 			          <property>
 			            <name>app</name>
-			            <value>metric-app</value>
+			            <value>spring-integration-sample</value>
 			          </property>
 			        </all>
 			      </labels>
@@ -138,7 +137,6 @@
 	                </config>
 	                
               </enricher>
-               
             </configuration>
 
             <executions>
