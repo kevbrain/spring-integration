@@ -93,13 +93,14 @@
             <artifactId>openshift-maven-plugin</artifactId>
             <version>1.0.2</version>
             <configuration>
-
+		      <profile>metric-app-h2</profile>
+		      <!-- 
               <resources>
                	<labels>
 			        <all>
 			          <property>
 			            <name>app</name>
-			            <value>spring-integration-sample</value>
+			            <value>metric-app</value>
 			          </property>
 			        </all>
 			      </labels>
@@ -137,6 +138,7 @@
 	                </config>
 	                
               </enricher>
+               -->
             </configuration>
 
             <executions>
