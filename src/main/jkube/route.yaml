@@ -1,9 +1,0 @@
-spec:
-  host: spring-integration-sample-launcher-infra.apps.ksr.clusters.its4u.eu
-  port:
-    targetPort: 8080-tcp
-  to:
-    kind: Service
-    name: spring-integration-sample
-    weight: 100
-  wildcardPolicy: None
