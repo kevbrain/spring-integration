@@ -1,10 +1,4 @@
-- name: metric-app-h2
-  resources:
-    labels:
-      all:
-        property:
-          name: app
-          value: metric-app-h2
+- name: metric-app-h2 
   generator:
     includes:
       include: spring-boot
