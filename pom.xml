@@ -93,8 +93,8 @@
             <artifactId>openshift-maven-plugin</artifactId>
             <version>1.0.2</version>
             <configuration>
-		      <profile>metric-app-h2</profile>
-		      <!-- 
+		      <!-- <profile>metric-app-h2</profile>-->
+		      
               <resources>
                	<labels>
 			        <all>
@@ -138,7 +138,7 @@
 	                </config>
 	                
               </enricher>
-               -->
+               
             </configuration>
 
             <executions>
