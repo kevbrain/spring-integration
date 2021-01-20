@@ -1,19 +1,18 @@
 - name: metric-app-h2 
   generator:
     includes:
-      include: spring-boot
+      - spring-boot
     config:
       spring-boot:
         color: always
     enricher:
       includes:
-        include:
-          - jkube-openshift-service-expose
-          - jkube-openshift-route
-        excludes:
-          exclude: jkube-expose
-        config:
-          jkube-openshift-service-expose:
-            name: spring-integration-sample
-            port: '80:8080'
+        - jkube-openshift-service-expose
+        - jkube-openshift-route
+      excludes:
+        - jkube-expose
+      config:
+        jkube-openshift-service-expose:
+         name: spring-integration-sample
+         port: '80:8080'
         
