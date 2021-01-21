@@ -9,7 +9,7 @@ metadata:
     provider: jkube
   name: metrics-app-h2
 spec:
-  host: metrics-launcher-infra.apps.ksr.clusters.its4u.eu
+  host: metrics-app-h2.apps.ksr.clusters.its4u.eu
   port:
     targetPort: http
   to:

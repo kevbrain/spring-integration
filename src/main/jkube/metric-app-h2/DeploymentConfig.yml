@@ -1,3 +1,5 @@
+metadata:
+  name: metrics-app-h2
 spec:
   strategy:
     type: Rolling
