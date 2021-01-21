@@ -1,0 +1,23 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: "true"
+  labels:
+    app: metrics-app-postgres
+    group: metrics-app-postgres
+    provider: jkube
+  name: metrics-app-postgres
+spec:
+  host: metrics-app-postgres.apps.ksr.clusters.its4u.eu
+  port:
+    targetPort: port-1
+  to:
+    kind: Service
+    name: metrics-app-postgres
+    weight: 100
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Allow
+  wildcardPolicy: None
+status:

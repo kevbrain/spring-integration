@@ -11,8 +11,17 @@
       - jkube-openshift-route
     excludes:
       - jkube-expose
+- name: metric-app-postgres 
+  generator:
+    includes:
+      - spring-boot
     config:
-      jkube-openshift-service-expose:
-        name: spring-integration-sample
-        port: '80:8080'
+      spring-boot:
+        color: always
+  enricher:
+    includes:
+      - jkube-openshift-service-expose
+      - jkube-openshift-route
+    excludes:
+      - jkube-expose
         
