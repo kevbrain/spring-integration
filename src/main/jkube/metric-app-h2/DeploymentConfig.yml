@@ -28,7 +28,7 @@ spec:
   test: false
   selector:
     app: metrics-app-h2
-    group: metrics-app-h2
+    group: metrics-app
     provider: jkube
   template:
     metadata:
