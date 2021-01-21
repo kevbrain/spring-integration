@@ -1,5 +1,7 @@
 metadata:
   name: metrics-app-mariadb
+  labels:
+    app.kubernetes.io/part-of: metrics
 spec:
   strategy:
     type: Rolling
