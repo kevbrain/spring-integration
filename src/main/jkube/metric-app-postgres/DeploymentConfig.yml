@@ -138,15 +138,21 @@ spec:
             - name: KAFKA_PRODUCER_TOPIC
               value: metrics-data
             - name: METRICS_DATASOURCE_DIALECT_CLASS
-              value: org.hibernate.dialect.H2Dialect
+              value: org.hibernate.dialect.PostgreSQLDialect
             - name: METRICS_DATASOURCE_DRIVER
-              value: org.h2.Driver
+              value: org.postgresql.Driver
             - name: METRICS_DATASOURCE_PASSWORD
-              value: password
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: database-password
             - name: METRICS_DATASOURCE_URL
-              value: 'jdbc:h2:mem:testdb'
+              value: 'jdbc:postgres://localhost:5432:sampledb'
             - name: METRICS_DATASOURCE_USERNAME
-              value: sa
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: database-user
             - name: KUBERNETES_NAMESPACE
               valueFrom:
                 fieldRef:
