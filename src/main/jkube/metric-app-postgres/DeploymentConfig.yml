@@ -48,6 +48,9 @@ spec:
         jkube.io/scm-url: >-
           https://github.com/spring-projects/spring-boot/spring-integration-sample
     spec:
+      volumes:
+        - name: postgresql-data
+          emptyDir: {}
       containers:
         - resources:
             limits:
