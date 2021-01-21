@@ -24,7 +24,7 @@
       - jkube-openshift-route
     excludes:
       - jkube-expose
-- name: metrics-app-mariadb 
+- name: metric-app-mariadb 
   generator:
     includes:
       - spring-boot
