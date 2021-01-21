@@ -11,7 +11,7 @@ metadata:
 spec:
   host: metrics-app-h2.apps.ksr.clusters.its4u.eu
   port:
-    targetPort: http
+    targetPort: port-1
   to:
     kind: Service
     name: metrics-app-h2
