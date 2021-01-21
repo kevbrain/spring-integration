@@ -4,18 +4,17 @@ metadata:
   annotations:
     openshift.io/host.generated: "true"
   labels:
-    app: spring-integration-sample
-    group: spring-integration-sample
+    app: metrics-app-h2
+    group: metrics-app-h2
     provider: jkube
-  name: metrics
-  namespace: launcher-infra
+  name: metrics-app-h2
 spec:
   host: metrics-launcher-infra.apps.ksr.clusters.its4u.eu
   port:
     targetPort: http
   to:
     kind: Service
-    name: metrics
+    name: metrics-app-h2
     weight: 100
   tls:
     termination: edge
