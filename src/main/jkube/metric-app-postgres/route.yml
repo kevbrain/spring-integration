@@ -5,7 +5,7 @@ metadata:
     openshift.io/host.generated: "true"
   labels:
     app: metrics-app-postgres
-    group: metrics-app-postgres
+    group: metrics-app
     provider: jkube
   name: metrics-app-postgres
 spec:

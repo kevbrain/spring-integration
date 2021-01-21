@@ -28,7 +28,7 @@ spec:
   test: false
   selector:
     app: metrics-app-postgres
-    group: metrics-app-postgres
+    group: metrics-app
     provider: jkube
   template:
     metadata:

@@ -35,7 +35,7 @@ spec:
       creationTimestamp: null
       labels:
         app: metrics-app-h2
-        group: metrics-app-h2
+        group: metrics-app
         provider: jkube
         version: 0.0.1-SNAPSHOT
       annotations:
