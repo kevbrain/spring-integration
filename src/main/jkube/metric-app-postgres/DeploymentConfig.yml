@@ -147,7 +147,7 @@ spec:
                   name: postgresql
                   key: database-password
             - name: METRICS_DATASOURCE_URL
-              value: 'jdbc:postgres://localhost:5432:sampledb'
+              value: 'jdbc:postgres://localhost:5432/sampledb'
             - name: METRICS_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
