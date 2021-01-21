@@ -24,4 +24,16 @@
       - jkube-openshift-route
     excludes:
       - jkube-expose
-        
+- name: metrics-app-mariadb 
+  generator:
+    includes:
+      - spring-boot
+    config:
+      spring-boot:
+        color: always
+  enricher:
+    includes:
+      - jkube-openshift-service-expose
+      - jkube-openshift-route
+    excludes:
+      - jkube-expose

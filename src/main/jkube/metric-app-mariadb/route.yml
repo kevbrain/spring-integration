@@ -1,0 +1,23 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: "true"
+  labels:
+    app: metrics-app-mariadb
+    group: metrics-app-mariadb
+    provider: jkube
+  name: metrics-app-mariadb
+spec:
+  host: metrics-app-mariadb.apps.ksr.clusters.its4u.eu
+  port:
+    targetPort: port-1
+  to:
+    kind: Service
+    name: metrics-app-mariadb
+    weight: 100
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Allow
+  wildcardPolicy: None
+status:
