@@ -9,7 +9,7 @@ metadata:
     provider: jkube
   name: metrics-app-postgres
 spec:
-  host: metrics-app-postgres.apps.ksr.clusters.its4u.eu
+  host: metrics-app-postgres.apps.ocp.its4u.eu
   port:
     targetPort: port-1
   to:

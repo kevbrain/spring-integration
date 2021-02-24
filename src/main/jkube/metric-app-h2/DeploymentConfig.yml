@@ -21,7 +21,7 @@ spec:
           - spring-boot
         from:
           kind: ImageStreamTag
-          namespace: launcher-infra
+          namespace: kafka
           name: 'spring-integration-sample:latest'
         lastTriggeredImage: >-
           image-registry.openshift-image-registry.svc:5000/kafka/spring-integration-sample:latest
@@ -78,7 +78,7 @@ spec:
             - name: METRICS_CONTEXT_CLASSPATH
               value: /metrics/resources/
             - name: KAFKA_BOOTSTRAP_SERVERS
-              value: 'my-kafka-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092'
+              value: 'its4u-kafka-kafka-bootstrap.kafka.svc.cluster.local:9092'
             - name: KAFKA_CONSUMER_TOPIC
               value: metrics-data
             - name: KAFKA_PRODUCER_TOPIC

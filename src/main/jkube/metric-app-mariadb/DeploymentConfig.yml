@@ -21,10 +21,10 @@ spec:
           - spring-boot
         from:
           kind: ImageStreamTag
-          namespace: launcher-infra
+          namespace: kafka
           name: 'spring-integration-sample:latest'
         lastTriggeredImage: >-
-          image-registry.openshift-image-registry.svc:5000/launcher-infra/spring-integration-sample@sha256:224f6e6caa13b497f69e3e5718968949606e4e711365e48050a50c41596f4724
+          image-registry.openshift-image-registry.svc:5000/kafka/spring-integration-sample:latest
   replicas: 2
   revisionHistoryLimit: 2
   test: false
@@ -113,7 +113,7 @@ spec:
               mountPath: /var/lib/mysql/data
           terminationMessagePolicy: File
           image: >-
-            image-registry.openshift-image-registry.svc:5000/openshift/mariadb@sha256:7c7a64f8be9f4a14d0101da4d73c54fca7b57cfdc94b3425fd3c6eb3b4709e87
+            image-registry.openshift-image-registry.svc:5000/openshift/mariadb:latest
         - resources: {}
           readinessProbe:
             httpGet:
@@ -141,7 +141,7 @@ spec:
             - name: METRICS_CONTEXT_CLASSPATH
               value: /metrics/resources/
             - name: KAFKA_BOOTSTRAP_SERVERS
-              value: 'my-kafka-cluster-kafka-bootstrap.amq.svc.cluster.local:9092'
+              value: 'its4u-kafka-kafka-bootstrap.kafka.svc.cluster.local:9092'
             - name: KAFKA_CONSUMER_TOPIC
               value: metrics-data
             - name: KAFKA_PRODUCER_TOPIC
@@ -182,7 +182,7 @@ spec:
           imagePullPolicy: IfNotPresent
           terminationMessagePolicy: File
           image: >-
-            image-registry.openshift-image-registry.svc:5000/launcher-infra/spring-integration-sample@sha256:224f6e6caa13b497f69e3e5718968949606e4e711365e48050a50c41596f4724
+            image-registry.openshift-image-registry.svc:5000/kafka/spring-integration-sample:latest
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst

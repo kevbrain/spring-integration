@@ -3,32 +3,31 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:int="http://www.springframework.org/schema/integration"
-       
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-            http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
-            ">
+       xmlns:int-http="http://www.springframework.org/schema/integration/http"
+       xmlns:int-kafka="http://www.springframework.org/schema/integration/kafka"
+       xsi:schemaLocation=
+       		"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+             http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+             http://www.springframework.org/schema/integration/kafka http://www.springframework.org/schema/integration/kafka/spring-integration-kafka.xsd
+             http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd">
 
-	<!-- SIMPLE FLOW  METRICS -->
-
-    <int:gateway id="gtwMetricIn" service-interface="org.boudet.spring.integration.sample.service.MetricSenderService">
-        <int:method name="send" request-channel="metrics.in"/>   	    
-    </int:gateway>
+  
     
+    <!-- HTTP ADAPTER IN  -->
     <int:channel id="metrics.in"/>
+    <int:channel id="outputChannel"/>
     
-   
-	<!-- SIMPLE FLOW DOVREQ -->
-	
-	<int:gateway service-interface="org.boudet.spring.integration.sample.service.DovReqReceiver">       
-        <int:method name="receive" request-channel="dovreq.in"/>
-    </int:gateway>
-
-	<int:channel id="dovreq.in"/>
-	<int:service-activator input-channel="dovreq.in" method="handle" ref="dovReqReceiverServiceActivator" />
     
+    <int-http:inbound-channel-adapter
+    	channel="metrics.in" status-code-expression="T(org.springframework.http.HttpStatus).NO_CONTENT"
+    	supported-methods="POST, PUT" path="/metric"
+        request-payload-type="org.boudet.spring.integration.sample.model.Metric">
+    		<int-http:request-mapping consumes="application/json" />
+	</int-http:inbound-channel-adapter>
+ 
 	
-	<!-- WITH FILTER AND ROUTING -->
+	<!-- WITH FILTER ROUTING TRANSFORMING -->
 	
 	
 	<int:filter input-channel="metrics.in" ref="messageFilter" output-channel="metrics.filtered"/>
@@ -43,23 +42,42 @@
 	
 	<bean id="metricsTransformers" class="org.boudet.spring.integration.sample.transformers.MetricsTransformers"/> 
 	<int:channel id="metrics.all"/>
-	<int:chain input-channel="metrics.humidity" output-channel="produceMetricToKafka">
-	   		<!-- <int:object-to-json-transformer input-channel="metrics.all" output-channel="produceMetricToKafka"/> -->
-		    <!--  <int:service-activator ref="loggerAnyMessage" method="handle"/> -->
+	<int:chain input-channel="metrics.all" output-channel="produceMetricToKafka">
 		     <int:transformer  method="transformMetricToKafkaMessage" ref="metricsTransformers"  />
     </int:chain>
-  
 
 	<int:channel id="metrics.temperature"/>
 	<int:chain input-channel="metrics.temperature" output-channel="produceMetricToKafka">
-			<!--<int:service-activator ref="loggerAnyMessage" method="handle"/> -->
 			 <int:transformer  method="transformMetricToKafkaMessage" ref="metricsTransformers"  />     
     </int:chain>
 
 	<int:channel id="metrics.humidity"/>
 	<int:chain input-channel="metrics.humidity" output-channel="produceMetricToKafka">
-			<!-- <int:service-activator ref="loggerAnyMessage" method="handle"/> --> 
 			<int:transformer  method="transformMetricToKafkaMessage" ref="metricsTransformers"  />     
      </int:chain>
  
+  	<!-- KAFKA ADAPTER OUT  -->
+ 
+ 	<int:channel id="produceMetricToKafka"/>
+	
+	<int-kafka:outbound-channel-adapter kafka-template="template" 
+										channel="produceMetricToKafka"
+										sync="true"
+										topic="${kafka.producer.topic}"
+										message-key="customer"/>
+										
+
+	<bean  id = "template"  class = "org.springframework.kafka.core.KafkaTemplate" > 
+	    <constructor-arg> 
+	        <bean  class = "org.springframework.kafka.core.DefaultKafkaProducerFactory" > 
+	            <constructor-arg> 
+	                <map> 
+	                    <entry  key = "bootstrap.servers"  value = "${kafka.bootstrap-servers}" /> 
+	                    <entry  key = "key.serializer"  value = "org.apache.kafka.common.serialization.StringSerializer" /> 
+	                    <entry  key = "value.serializer"  value = "org.apache.kafka.common.serialization.StringSerializer" /> 
+	                  </map> 
+	            </constructor-arg> 
+	        </bean> 
+	    </constructor-arg> 
+	</bean>
 </beans>

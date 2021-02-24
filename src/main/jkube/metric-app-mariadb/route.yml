@@ -9,7 +9,7 @@ metadata:
     provider: jkube
   name: metrics-app-mariadb
 spec:
-  host: metrics-app-mariadb.apps.ksr.clusters.its4u.eu
+  host: metrics-app-mariadb.apps.ocp.its4u.eu
   port:
     targetPort: port-1
   to:
